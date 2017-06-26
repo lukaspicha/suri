@@ -1,0 +1,101 @@
+
+{block content}
+	<h2 class="ui teal header">
+		<div class="content">
+			<i class="add icon"></i> Nová pojistka
+			<div class="sub header">
+				<a n:href="default">Přehled pojistek</a>
+			</div>
+		</div>
+	</h2>
+	{form newInsuranceForm class => "ui form"}
+		<div n:foreach="$form->errors as $error" class="ui red message">
+			{$error}
+		</div>
+		<h4 class="ui dividing header">
+			<i class="user icon"></i> Informace o pojistínkovi
+		</h4>
+		<div class="fields">
+			<div class="four wide field">
+				{label name/}
+				{input name}
+			</div>
+			<div class="four wide field">
+				{label mail/}
+				{input mail}
+			</div>
+			<div class="four wide field">
+				{label bday_date}
+				{input bday_date id => "bday_date"}
+			</div>
+			<div class="four wide field">
+				{label zip_code}
+				{input zip_code}
+			</div>
+		</div>
+
+		<h4 class="ui dividing header">
+			<i class="car icon"></i> Údaje o autě
+		</h4>
+
+		<div class="fields">
+			<div class="four wide field">
+				{label car_types/}
+				{input car_types class => "ui dropdown"}
+			</div>
+			<div class="four wide field">
+				{label engine_capacity/}
+				{input engine_capacity}
+			</div>
+			<div class="four wide field">
+				{label engine_power}
+				{input engine_power}
+			</div>
+			<div class="four wide field">
+				{label weight}
+				{input weight}
+			</div>
+		</div>
+
+		<h4 class="ui dividing header">
+			<i class="checkmark box icon"></i> Dokončení
+		</h4>
+		<div class="field" style="text-align: center;">
+			{input send class => "ui teal button"}
+		</div>
+		
+	{/form}
+{/block}
+
+
+{block scripts}
+	{include parent}
+	<script type="text/javascript">
+		$(function() {
+            $("#bday_date").datepicker({
+                dateFormat: "dd.mm.yy",
+               	dayNamesMin: [ "Ne", "Po", "Út", "St", "Čt", "Pá", "So" ],
+               	firstDay: 1,
+               	monthNames: [ "Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec" ]
+            });
+        });
+
+
+		/*$("#carTypeSelect").change(function() {
+			var carType = $(this).val();
+			if(carType == 1 || carType == 2)
+			{
+				$("#engineCapInput").show();
+				$("#enginePowerInput").show();
+				$("#engineWeightInput").show();
+			}
+			else
+			{
+				$("#engineCapInput").hide();
+				$("#enginePowerInput").hide();
+				$("#engineWeightInput").show();
+			}
+		});*/
+
+	</script>
+{/block}

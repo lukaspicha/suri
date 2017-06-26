@@ -1,0 +1,54 @@
+
+{block content}
+
+	<h2 class="ui teal header">
+		<div class="content">
+			<i class="table icon"></i>
+			Přehled sjednaných pojistek 
+		</div>
+	</h2>
+	<div class="ui divider"></div>
+	<a n:href="order" class="ui orange button"><i class="add icon"></i> Nová smlouva</a>
+	<table class="ui celled  selectable table" style="text-align: center;">
+		<thead>
+			<tr>
+				<th>č. smlovy</th>
+				<th>Datum vytvoření</th>
+				<th>Pojistník</th>
+				<th>Datum narození pojistníka</th>
+				<th>PSČ pojistíka</th>
+				<th>Typ vozidla</th>
+				<th>Objem válců (cm3)</th>
+				<th>Výkon motoru (kW)</th>
+				<th>Hmotnost vozidla (kg)</th>
+				<th>Celková cena (Kč)</th>
+				<th colspan="6">Výpočet</th>
+			</tr>
+		</thead>
+		<tbody>
+			{foreach $insurances as $row}
+				<tr>
+					<td>{$row->id}</td>
+					<td>{$row->created|date:"j.n.Y H:i:s"}</td>
+					<td>{$row->client->name}</td>
+					<td>{$row->client->bday_date|date:"j.n.Y"}</td>
+					<td>{$row->client->zip_code}</td>
+					<td>{$row->car->car_types->name}</td>
+					<td>{$row->car->engine_capacity}</td>
+					<td>{$row->car->engine_power}</td>
+					<td>{$row->car->weight}</td>
+					<td>{$row->total_price}</td>
+					{foreach unserialize($row->calculation) as $param => $value}
+						{if $value < 0}
+							<td class="negative"><strong>{$param}:</strong>&nbsp<i>{$value}</i><br/></td>
+						{elseif $value > 1}
+							<td class="positive"><strong>{$param}:</strong>&nbsp<i>{$value}</i><br/></td>
+						{else}
+							<td class="disabled"><strong>{$param}:</strong>&nbsp<i>{$value}</i><br/></td>
+						{/if}
+					{/foreach}
+				</tr>
+			{/foreach}
+		</tbody>
+	</table>
+{/block}
